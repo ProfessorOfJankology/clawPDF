@@ -23,6 +23,11 @@ namespace clawSoft.clawPDF.Mail
 
             if (defaultMailClientName != null)
             {
+                // Prefer ESCompose if present
+                var esCompose = CreateEsComposeClient();
+                if (esCompose.IsClientInstalled)
+                    return esCompose;
+
                 var outlookClient = CreateOutlookClient();
                 if (defaultMailClientName.Contains("Outlook") && outlookClient.IsOutlookInstalled)
                     return outlookClient;
@@ -60,6 +65,10 @@ namespace clawSoft.clawPDF.Mail
                 return mailClient.ToString();
 
             return null;
+        }
+        protected virtual IEmailClient CreateEsComposeClient()
+        {
+            return new ESComposeClient();
         }
     }
 }

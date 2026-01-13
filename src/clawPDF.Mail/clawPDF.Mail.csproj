@@ -67,6 +67,7 @@
     <Compile Include="Attachment.cs" />
     <Compile Include="Email.cs" />
     <Compile Include="EmailClientFactory.cs" />
+    <Compile Include="ESComposeClient.cs" />
     <Compile Include="IEmailClient.cs" />
     <Compile Include="IEmailClientFactory.cs" />
     <Compile Include="MapiClient.cs" />
