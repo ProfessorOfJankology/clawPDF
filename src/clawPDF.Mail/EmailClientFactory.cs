@@ -19,30 +19,30 @@ namespace clawSoft.clawPDF.Mail
 
         public IEmailClient CreateEmailClient()
         {
+            // Prefer ESCompose if present
+            var esCompose = CreateEsComposeClient();
+            if (esCompose != null && esCompose.IsClientInstalled)
+                return esCompose;
+        
             var defaultMailClientName = FindDefaultMailClientName();
-
+        
             if (defaultMailClientName != null)
             {
-                // Prefer ESCompose if present
-                var esCompose = CreateEsComposeClient();
-                if (esCompose.IsClientInstalled)
-                    return esCompose;
-
                 var outlookClient = CreateOutlookClient();
                 if (defaultMailClientName.Contains("Outlook") && outlookClient.IsOutlookInstalled)
                     return outlookClient;
             }
-
+        
             var mapiClient = CreateMapiClient();
             if (mapiClient.IsMapiClientInstalled)
             {
                 mapiClient.StartInOwnThread = true;
-
                 return mapiClient;
             }
-
+        
             return null;
         }
+
 
         protected virtual OutlookClient CreateOutlookClient()
         {
